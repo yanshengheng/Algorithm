@@ -13,17 +13,16 @@ int main()
 	};//here we create memory spaces;
 	*/
 	struct Node *MyList;//we use pointer to operate it;
-	struct Node *Head;//to set the first position of the list 
-	//1.we shall allocate a memory spaces for our list;
-	MyList = (struct Node*)malloc(sizeof(struct Node));//image there is a box that put in address:Mylist 
-	Head = MyList;
-	//this box now has something;
-	MyList->Element = 1;
-	MyList->Next = 0;
-	printf("this is first Element:%d\n",MyList->Element);
-
-	//using Insert Operation
-	Insert(2,MyList,Head);
-	printf("this is the second Element: %d\n",MyList->Next->Element);
+	MyList = CreateList();
+	printf("the first Element: %d\n",GetElement(MyList,0));
+	
+	Append(MyList,1);
+	//printf("start the third Append: \n");
+	Append(MyList,2);
+	Append(MyList,3);
+	//printf("the second Element: %d\n",GetElement(MyList,1));
+	printf("the third Element: %d\n",GetElement(MyList,2));
+	printf("the fourth Element: %d\n",GetElement(MyList,3));
+	//printf("the first Element: %d\n", GetElement(MyList,0));
 	return 0;
 }

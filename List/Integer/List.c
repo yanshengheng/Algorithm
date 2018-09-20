@@ -1,5 +1,10 @@
+/*gcc version:
+ *Apple LLVM version 10.0.0 (clang-1000.10.44.2)
+ */
+
 #include"List.h"
 #include<stdlib.h>
+#include<stdio.h>
 /*
 	self-define type name:
 	struct Node
@@ -10,16 +15,31 @@
 	typedef struct Node *PtrToNode;
 	typedef PtrToNode List,Position;
 */
+/* aim to design a convient list operation */
 
-int IsEmpty(List L)
+struct Node *CreateList()
 {
-	return L->Next == 0;//0 to replace with NULL
+	struct Node *list = (struct Node*)malloc(sizeof(struct Node));
+	if(list == 0)
+    {
+        printf("Out of Space !!!");
+        exit(0);
+    }
+	list->Element = 0;
+	list->Next = 0;
+	return list;
 }
 
-int IsLast(Position P, List L)//'Position' 'List' are 'Struct Node *'
+int isEmpty(List L )
 {
-	return P->Next == 0;
+	if(L==0)
+	{
+		printf("Empty List");
+		return 1;
+	}
+	return 0;
 }
+
 
 Position Find(int X, List L)
 {
@@ -31,15 +51,7 @@ Position Find(int X, List L)
 	}
 	return P;
 }
-Position FindPrevious(int X, List L)
-{
-	Position P = L;
-	while(P->Next != 0 && P->Next->Element != X)
-	{
-		P = P->Next;
-	}
-	return P;
-}
+
 //This is mainly how list create
 void Insert(int X,List L, Position P)
 {
@@ -55,16 +67,8 @@ void Insert(int X,List L, Position P)
 	P->Next = TmpCell;
 }
 void Delete(int X, List L)
-{
-	Position P, TmpCell;
-	P = FindPrevious(X,L);
-	if(!IsLast(P,L))
-	{
-		TmpCell = P->Next;
-		P->Next = TmpCell->Next;
-		free(TmpCell);
-	}
-}
+{}
+
 void DeleteList(List L)
 {
 	Position P, Tmp;
@@ -77,3 +81,58 @@ void DeleteList(List L)
 		P = Tmp;
 	}
 }
+
+int GetElement(List L, int p)
+{
+	Position P;
+	if(isEmpty(L))
+	{
+		exit(0);
+	}
+	if(p == 0)
+	{
+		return L->Element;
+	}
+	else
+	{
+		P = L;
+		for(int i = 0; i < p; i++)
+		{
+			if(P == 0)
+			{
+				printf("Out of Index\n");
+				exit(0);
+			}
+			P = P ->Next;
+		}
+		return P->Element;
+	}
+}
+void Append(List L,int Elmt)//Elm:Element
+{
+	Position P;
+	List tmp;
+	List cell = CreateList();
+	cell->Element = Elmt;
+	if(isEmpty(L))
+		exit(0);
+		
+	P = L;
+	while(P != 0)
+	{	
+		if(P->Next == 0)
+		{
+			P->Next = cell;
+			break;
+		}
+		else
+		{
+			P = P->Next;
+			if(isEmpty(L))
+				exit(1);
+			
+		}
+
+	}
+}
+
