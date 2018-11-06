@@ -1,0 +1,70 @@
+<!DOCTYPE html>
+<html>
+    <head></head>
+    <body>
+        <input type="text" placeholder="Enter Plaintext" id="in"><br>
+        <button type="button" id="button0">CaesarEncrpt</button>
+        <p id="demo"></p>
+        <script>
+            var ALPHABET = "abcdefghijklmnopqrstuvwxyz";
+            var KEY = 3;
+            function CaesarEncrpt(plaintext_)
+            {
+                // 1.get all the index of the letters.
+                // 2.every letters' index mod key.
+                // 3.Get New letters from Alphabet.
+                var letter_index = [];
+                var ciphertext = [];
+                var cipher= "";
+                var plaintext_len = plaintext_.length;
+                var i = 0;//for-loop
+                var n = 0;//new index of ciphertext
+                for(i = 0; i < plaintext_len; i++)
+                {
+                    letter_index[i] = GetWordsIndex(plaintext_[i]);
+                }
+                for(i = 0; i < plaintext_len; i++)
+                {
+                    if(letter_index[i] == -1)//judge special charaters;
+                    {
+                        ciphertext[i] = " ";
+                        continue;
+                    }
+                    n = (letter_index[i] + KEY) % ALPHABET.length;//main Encrption algorithm;
+                    ciphertext[i] = ALPHABET[n];
+                }
+                for(i = 0; i < plaintext_len; i++)
+                {
+                    cipher = cipher + ciphertext[i];
+                }
+                return cipher;
+            }
+            function GetWordsIndex(letter_)
+            {
+                var i = 0;//for-loop
+                for(i = 0; i < ALPHABET.length; i++)
+                {
+                    if(letter_ == ALPHABET[i])
+                    {
+                        return i;
+                    }
+                }
+                return -1;
+            }
+            function Encrpt(plaintext_)
+            {document.getElementById("demo").innerHTML = CaesarEncrpt(plaintext_);}
+            //Testing event----------
+            function BtnEvent()
+            {
+                var plaintext = document.getElementById("in").value;
+                Encrpt(plaintext);
+            }
+            function Test()
+            {
+                var t = document.getElementById("button0").onclick = function(){BtnEvent()};
+            }
+            Test();
+
+        </script>
+    </body>
+</html>
